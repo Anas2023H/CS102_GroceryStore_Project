@@ -1,10 +1,17 @@
-import java.util.ArrayList;
 
-public class Sale extends Cart {
+import java.util.*;
+public class Sale extends Cart implements Discountable {
     private double totalPrice;
+    private double discountAmount;
+    private String discountCode;
 
     public Sale() {
-        super(new ArrayList<>(), ""); // Provide an empty cart and a placeholder name
+        super(new ArrayList<>(), "");
+        totalPrice = 0;
+    }
+
+    public String getDiscountCode() {
+        return discountCode;
     }
 
     public double getTotalPrice() {
@@ -14,11 +21,9 @@ public class Sale extends Cart {
     public void setTotalPrice(double totalPrice) {
         if (!(totalPrice == 0)) {
             this.totalPrice = totalPrice;
-        } else {
-            throw new IllegalArgumentException("Sale was canceled");
-        }
     }
-
+}
+    
     public void checkout(Inventory inventory, ArrayList<Customer> customers) {
         if (customers.isEmpty()) {
             System.out.println("No customers to process.");
@@ -29,17 +34,42 @@ public class Sale extends Cart {
         Cart currentCustomer = (Cart)customers.get(0);
         setName(currentCustomer.getName());
         setCart(currentCustomer.getCart());
-
+        Scanner sc = new Scanner(System.in);
+        String customerName = sc.nextLine();
+        setName(customerName);
         System.out.println("Invoice for " + getName() + ":");
+
+        // Calculate the total price before discount
+        double totalPriceBeforeDiscount = 0;
         for (Product cartProduct : getCart()) {
-            System.out.println(cartProduct.getName() + " - Price: $" + cartProduct.getPrice() * cartProduct.getQuantityWanted() +
+            double productPrice = cartProduct.getPrice() * cartProduct.getQuantityWanted();
+            System.out.println(cartProduct.getName() + " - Price: $" + productPrice +
                     " - Quantity bought: " + cartProduct.getQuantityWanted());
-
-            totalPrice += cartProduct.getPrice() * cartProduct.getQuantityWanted();
-
+            totalPriceBeforeDiscount += productPrice;
         }
+
+        // Prompt the user to enter the discount code
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter discount code (or leave blank for no discount): ");
+        discountCode = scanner.nextLine();
+
+        // Apply the discount
+        applyDiscount(totalPriceBeforeDiscount);
+
+        // Calculate the total price after discount
+        double totalPriceAfterDiscount = totalPriceBeforeDiscount - discountAmount;
+
+        // Print the total price before and after discount, and the discount amount
         System.out.println("-------------------------------------------------------------------");
-        System.out.println("Total Price: " + getTotalPrice() + "$");
+        System.out.println("Total Price before discount: " + totalPriceBeforeDiscount + "$");
+        if (totalPriceBeforeDiscount - totalPriceAfterDiscount > 0) {
+            System.out.println("Discount amount: " + discountAmount + "$");
+            System.out.println("Total Price after discount: " + totalPriceAfterDiscount + "$");
+            System.out.println("You saved: " + discountAmount + "$ on this purchase.");
+        } else {
+            System.out.println("No discount applied.");
+            System.out.println("Total Price: " + totalPriceAfterDiscount + "$");
+        }
 
         // Clear the cart
         getCart().clear();
@@ -49,5 +79,20 @@ public class Sale extends Cart {
 
         // Recursive call for the next customer
         checkout(inventory, customers);
+    }
+
+    public void applyDiscount(double tp) {
+        if (getDiscountCode().compareTo("winterSale") == 0 || getDiscountCode().compareTo("15Off") == 0) { // Replace "DISCOUNTCODE" with your chosen discount code
+            // Calculate the discount amount
+            discountAmount = tp * 0.15; // Replace 0.1 with the percentage discount you want to apply
+
+            // Apply the discount
+            tp -= discountAmount;
+
+            // Set the total price after discount
+            setTotalPrice(tp);
+        } else {
+            discountAmount = 0;
+        }
     }
 }

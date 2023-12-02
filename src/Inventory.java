@@ -18,17 +18,6 @@ public class Inventory {
         productList.remove(product);
     }
 
-//         public void updateProductQuantity(Product product, int quantity) {
-//        // Corrected code: Subtract the purchased quantity from the product's stock
-//        int updatedStock = product.getQuantityInStock() - quantity;
-//
-//        if (updatedStock >= 0) {
-//            product.setQuantityInStock(updatedStock);
-//        } else {
-//            throw new IllegalArgumentException("Not enough stock available for " + product.getName());
-//        }
-//    }
-
     public List<Product> getProductList() {
         return productList;
     }

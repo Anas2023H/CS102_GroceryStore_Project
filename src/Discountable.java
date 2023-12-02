@@ -9,5 +9,5 @@
  * @author tarek
  */
 public interface Discountable {
-    void applyDiscount(double discountPercentage);
+    void applyDiscount(double totalPrice);
 }
