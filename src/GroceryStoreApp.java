@@ -47,31 +47,34 @@ public class GroceryStoreApp {
                 userInput = scanner.next();
                 
                 // Inside the do-while loop in processCustomers method
-if (!userInput.equalsIgnoreCase("checkout")) {
-    // Find the product in the inventory
-    Product selectedProduct = findProductByName(inventory, userInput);
+        if (!userInput.equalsIgnoreCase("checkout")) {
+            // Find the product in the inventory
+            Product selectedProduct = findProductByName(inventory, userInput);
 
-    if (selectedProduct != null) {
-        // Ask for quantity
-        System.out.print("Enter the quantity: ");
-        selectedProduct.setQuantityWanted(scanner.nextInt());
+            if (selectedProduct != null) {
+                // Ask for quantity
+                System.out.print("Enter the quantity: ");
+                int amount = 0;
+                if(amount<=selectedProduct.getQuantityInStock()){
+                     selectedProduct.setQuantityWanted(scanner.nextInt());
 
-        // Consume the newline character
-        scanner.nextLine();
+                // Consume the newline character
+                scanner.nextLine();
 
-        // Add to the cart
-        customer.addToCart(selectedProduct, selectedProduct.getQuantityWanted());
-        if(selectedProduct.getQuantityWanted()<=selectedProduct.getQuantityInStock()){
-            selectedProduct.setQuantityInStock(selectedProduct.getQuantityInStock() - selectedProduct.getQuantityWanted()); // Set the quantity in the cart
-            System.out.println("HI");
-        }
-        else
-            System.out.println("Invalid");
-            
-    } else {
-        System.out.println("Product not found. Please enter a valid product name.");
-    }
-}
+                // Add to the cart
+
+                if(selectedProduct.getQuantityWanted()<=selectedProduct.getQuantityInStock()){
+                    customer.addToCart(selectedProduct, selectedProduct.getQuantityWanted());
+                    selectedProduct.setQuantityInStock(selectedProduct.getQuantityInStock() - selectedProduct.getQuantityWanted()); // Set the quantity in the cart
+                    System.out.println("HI");
+                }
+                selectedProduct.setQuantityWanted(scanner.nextInt());
+            } 
+            else {
+                 System.out.println("Product not found. Please enter a valid product name.");
+            }
+            }
+        }    
             } while (!userInput.equalsIgnoreCase("checkout"));
             // Set the name for the Sale
             System.out.print("Enter your name: ");
@@ -85,7 +88,7 @@ if (!userInput.equalsIgnoreCase("checkout")) {
             // Close the scanner
         }
     }
-
+    
     private static Inventory loadProducts(String filename) throws IOException {
         Inventory inventory = new Inventory();
 
