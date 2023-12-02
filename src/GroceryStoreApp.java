@@ -1,13 +1,9 @@
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileReader;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
+
 
 public class GroceryStoreApp {
 
@@ -65,7 +61,13 @@ if (!userInput.equalsIgnoreCase("checkout")) {
 
         // Add to the cart
         customer.addToCart(selectedProduct, selectedProduct.getQuantityWanted());
-        selectedProduct.setQuantityInStock(selectedProduct.getQuantityInStock() - selectedProduct.getQuantityWanted()); // Set the quantity in the cart
+        if(selectedProduct.getQuantityWanted()<=selectedProduct.getQuantityInStock()){
+            selectedProduct.setQuantityInStock(selectedProduct.getQuantityInStock() - selectedProduct.getQuantityWanted()); // Set the quantity in the cart
+            System.out.println("HI");
+        }
+        else
+            System.out.println("Invalid");
+            
     } else {
         System.out.println("Product not found. Please enter a valid product name.");
     }
