@@ -66,9 +66,8 @@ public class GroceryStoreApp {
                 if(selectedProduct.getQuantityWanted()<=selectedProduct.getQuantityInStock()){
                     customer.addToCart(selectedProduct, selectedProduct.getQuantityWanted());
                     selectedProduct.setQuantityInStock(selectedProduct.getQuantityInStock() - selectedProduct.getQuantityWanted()); // Set the quantity in the cart
-                    System.out.println("HI");
                 }
-                selectedProduct.setQuantityWanted(scanner.nextInt());
+                selectedProduct.setQuantityWanted(amount);
             } 
             else {
                  System.out.println("Product not found. Please enter a valid product name.");
