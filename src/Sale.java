@@ -50,7 +50,7 @@ public class Sale extends Cart implements Discountable {
 
         // Prompt the user to enter the discount code
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter discount code (): ");
+        System.out.print("Enter discount code (or leave blank for no discount): ");
         discountCode = scanner.nextLine();
 
         // Apply the discount
