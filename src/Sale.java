@@ -26,7 +26,7 @@ public class Sale extends Cart implements Discountable {
     
     public void checkout(Inventory inventory, ArrayList<Customer> customers) {
         if (customers.isEmpty()) {
-            System.out.println("No customers to process.");
+            
             return;
         }
 
