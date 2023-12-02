@@ -55,6 +55,7 @@ public class GroceryStoreApp {
                 // Ask for quantity
                 System.out.print("Enter the quantity: ");
                 int amount = scanner.nextInt();
+                
                 if(amount<=selectedProduct.getQuantityInStock()){
                      selectedProduct.setQuantityWanted(amount);
 
@@ -68,6 +69,7 @@ public class GroceryStoreApp {
                     selectedProduct.setQuantityInStock(selectedProduct.getQuantityInStock() - selectedProduct.getQuantityWanted()); // Set the quantity in the cart
                     System.out.println("ya");
                 }
+                else System.out.println("Not enough of this product in stock please buy a valid amount");
                 
             } 
             else {
