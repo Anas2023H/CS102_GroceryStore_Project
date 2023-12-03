@@ -29,8 +29,7 @@ public class GroceryStoreApp {
             System.out.println("Processing complete.");
             return;
         }
-
-        // Example customer
+        //Create a sale for each customer
         Sale customer = new Sale();
 
         System.out.println("Available products:");
@@ -41,43 +40,40 @@ public class GroceryStoreApp {
         try ( // Interaction loop
                 Scanner scanner = new Scanner(System.in)) {
             String userInput;
-            do {
-                // User input
-                System.out.print("Enter a product name to add to your cart (or type 'checkout' to complete your purchase): ");
-                userInput = scanner.next();
-                
-                // Inside the do-while loop in processCustomers method
-        if (!userInput.equalsIgnoreCase("checkout")) {
-            // Find the product in the inventory
-            Product selectedProduct = findProductByName(inventory, userInput);
+        do {
+            // User input
+            System.out.print("Enter a product name to add to your cart (or type 'checkout' to complete your purchase): ");
+            userInput = scanner.nextLine().trim();
 
-            if (selectedProduct != null) {
-                // Ask for quantity
-                System.out.print("Enter the quantity: ");
-                int amount = scanner.nextInt();
-                
-                if(amount<=selectedProduct.getQuantityInStock()){
-                     selectedProduct.setQuantityWanted(amount);
+            if (!userInput.equalsIgnoreCase("checkout")) {
+                // Find the product in the inventory
+                Product selectedProduct = findProductByName(inventory, userInput);
 
-                // Consume the newline character
-                scanner.nextLine();
+                if (selectedProduct != null) {
+                    // Ask for quantity
+                    System.out.print("Enter the quantity: ");
+                    int amount = scanner.nextInt();
 
-                // Add to the cart
+                    if (amount > 0 && amount <= selectedProduct.getQuantityInStock()) {
+                        // Set the quantity wanted
+                        selectedProduct.setQuantityWanted(amount);
 
-                if(selectedProduct.getQuantityWanted()<=selectedProduct.getQuantityInStock()){
-                    customer.addToCart(selectedProduct, selectedProduct.getQuantityWanted());
-                    selectedProduct.setQuantityInStock(selectedProduct.getQuantityInStock() - selectedProduct.getQuantityWanted()); // Set the quantity in the cart
-                    System.out.println("ya");
+                        // Consume the newline character
+                        scanner.nextLine();
+                        
+
+                        // Add to the cart
+                        customer.addToCart(selectedProduct, selectedProduct.getQuantityWanted());
+                        selectedProduct.setQuantityInStock(selectedProduct.getQuantityInStock() - selectedProduct.getQuantityWanted()); // Set the quantity in the cart
+                    } else {
+                        System.out.println("Invalid quantity. Please enter a valid quantity.");
+                        scanner.nextLine();
+                    }
+                } else {
+                    System.out.println("Product not found. Please enter a valid product name.");
                 }
-                else System.out.println("Not enough of this product in stock please buy a valid amount");
-                
-            } 
-            else {
-                 System.out.println("Product not found. Please enter a valid product name.");
             }
-            }
-        }    
-            } while (!userInput.equalsIgnoreCase("checkout"));
+        } while (!userInput.equalsIgnoreCase("checkout"));
             // Set the name for the Sale
             System.out.print("Enter your name: ");
             String customerName = scanner.nextLine();
