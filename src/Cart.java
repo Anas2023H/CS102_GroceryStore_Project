@@ -1,7 +1,7 @@
 
 import java.util.ArrayList;
 import java.util.List;
-
+// This class represents a shopping cart that is then filled with the customers products
 public class Cart extends Customer implements CartInterface  {
     private ArrayList<Product> cart;
     

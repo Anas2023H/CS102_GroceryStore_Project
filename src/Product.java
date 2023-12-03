@@ -1,6 +1,6 @@
 
 import java.util.Scanner;
-
+// Products represent store items they have a name a price and a quantitiy
 class Product implements ProductInterface{
     private String name;
     private double price;

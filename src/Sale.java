@@ -1,5 +1,6 @@
 
 import java.util.*;
+// Sales represent transactions and return an invoice
 public class Sale extends Cart implements Discountable {
     private double totalPrice;
     private double discountAmount;

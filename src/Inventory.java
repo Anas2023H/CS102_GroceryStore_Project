@@ -2,7 +2,7 @@
 
 import java.util.ArrayList;
 import java.util.List;
-
+//The inventory is a List of product that get updated after every sale
 public class Inventory implements InventoryInterface {
     private List<Product> productList;
 
