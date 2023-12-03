@@ -36,16 +36,16 @@ public class Sale extends Cart implements Discountable {
         setName(currentCustomer.getName());
         setCart(currentCustomer.getCart());
         Scanner sc = new Scanner(System.in);
+        //Getting Customer name.
         String customerName = sc.nextLine();
         setName(customerName);
-        System.out.println("Invoice for " + getName() + ":");
+        System.out.println("-------------------------------------------------------------------");
+        
 
         // Calculate the total price before discount
         double totalPriceBeforeDiscount = 0;
         for (Product cartProduct : getCart()) {
             double productPrice = cartProduct.getPrice() * cartProduct.getQuantityWanted();
-            System.out.println(cartProduct.getName() + " - Price: $" + productPrice +
-                    " - Quantity bought: " + cartProduct.getQuantityWanted());
             totalPriceBeforeDiscount += productPrice;
         }
 
@@ -62,9 +62,14 @@ public class Sale extends Cart implements Discountable {
 
         // Print the total price before and after discount, and the discount amount
         System.out.println("-------------------------------------------------------------------");
+        System.out.println("Invoice for " + getName() + ":");
+        for (Product cartProduct : getCart()) {
+            double productPrice = cartProduct.getPrice() * cartProduct.getQuantityWanted();
+            System.out.println(cartProduct.getName() + " - Price: $" + productPrice +
+                    " - Quantity bought: " + cartProduct.getQuantityWanted());           
+        }
         System.out.println("Total Price before discount: " + totalPriceBeforeDiscount + "$");
         if (totalPriceBeforeDiscount - totalPriceAfterDiscount > 0) {
-            System.out.println("Discount amount: " + discountAmount + "$");
             System.out.println("Total Price after discount: " + totalPriceAfterDiscount + "$");
             System.out.println("You saved: " + discountAmount + "$ on this purchase.");
         } else {

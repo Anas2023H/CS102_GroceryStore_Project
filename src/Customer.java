@@ -13,10 +13,10 @@ public class Customer {
     public String getName() {
         return name;
     }
-
+//Checks if the name is invalid, doesn't take more than 1 name.
    public void setName(String name) {
         for (int i = 0; i < name.length(); i++) {
-            if (!Character.isAlphabetic(name.charAt(i))) {
+            if (!Character.isAlphabetic(name.charAt(i)) || name.length() == 0) {
                 throw new IllegalArgumentException("Invalid Name, must only have letters.");
             }
         }
